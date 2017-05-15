@@ -18,21 +18,38 @@ namespace Library
 {
     public partial class MainWindow : Window
     {
+      
+
         public MainWindow()
         {
-            InitializeComponent();
             var log = new Login();
+            Singleton.wnd = log;
+            Singleton.wnd.Closed += Wnd_Closed;
             log.ShowDialog();
 
-            XDocument doc = new XDocument();
-            var a = new XElement("Users");
-            var b = new XElement("User");
-            b.Add(new XAttribute("IsAdmin", true));
-            a.Add(b);
-            doc.Add(a);
-            doc.Save("users.xml");
-            
-           
+            InitializeComponent();
+
+            List<User> users = new List<User>();
+            var doc = XDocument.Load("Users.xml");
+            foreach (var x in doc.Element("Users").Elements())
+            {
+                users.Add(new User(x.Attribute("FirstName").Value, x.Attribute("LastName").Value, x.Attribute("Login").Value, x.Attribute("Password").Value, Convert.ToInt32(x.Attribute("Phone").Value), Convert.ToInt32(x.Attribute("PassportSeries").Value), Convert.ToInt32(x.Attribute("PassportId").Value)));
+            }
+            Table.ItemsSource = users;
+
+            if (Singleton.CurrentUserType == Library.UserType.Admin)
+                Color.Fill = new SolidColorBrush(Colors.Red);
+            UserType.Text = Singleton.Name;
+
+          
+
         }
+
+        private void Wnd_Closed(object sender, EventArgs e)
+        {
+            if (Singleton.CurrentUserType == Library.UserType.NonLoged)
+                App.Current.Shutdown();
+        }
+
     }
 }

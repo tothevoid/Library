@@ -7,25 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" ResizeMode="NoResize">
     <Grid>
-        <TabControl>
-            <TabItem Header="Main">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Actions">
+                <MenuItem Header="Connect"/>
+                <MenuItem Header="Settings"/>
+            </MenuItem>
+        </Menu>
+        <TabControl  Grid.Row="1">
+            <TabItem Header="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
-                    <ListView>
-                        
-                    </ListView>
+                    <DataGrid Name="Table">
+                    </DataGrid>
                     
                 </Grid>
             </TabItem>
-            <TabItem Header="Smth">
+            <TabItem Header="2">
                 
             </TabItem>
-            <TabItem Header="LUL">
+            <TabItem Header="3">
                 
             </TabItem>
         </TabControl>
+        <Border BorderThickness="1" BorderBrush="Black">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
+                <TextBlock Name="UserType" Text="User" Padding="0,0,5,0" FontSize="12"  />
+                <Ellipse Name="Color"  Height="15" Width="15" Fill="Aqua" />
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

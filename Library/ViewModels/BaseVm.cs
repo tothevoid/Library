@@ -21,9 +21,9 @@ namespace Library
             if (field != null && !field.Equals(value) || value != null && !value.Equals(field))
             {
                 field = value;
-
                 // Not supported by vs12
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+                if (PropertyChanged != null)
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propName));
             }
         }
     }

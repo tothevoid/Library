@@ -11,26 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data;
-using MySql.Data.MySqlClient;
-using System.Xml.Linq;
 
 namespace Library
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Логика взаимодействия для Registration.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class Registration : Window
     {
-        public Login()
+        public Registration()
         {
             InitializeComponent();
-            log.Focus();
-            var instance = new ViewModels.LoginVm();
-            DataContext = instance;
-               
-        }
 
-      
+            var instance = new ViewModels.RegistrationVm();
+
+            DataContext = instance;
+        }
     }
 }

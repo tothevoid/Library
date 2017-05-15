@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Users>
-  <User IsAdmin="true" />
+  <User FirstName="Typical" LastName="User" Login="qwerty" Password="1337" Phone="1900" PassportSeries="1337" PassportId="123321" IsAdmin="0" />
+  <User FirstName="Solid" LastName="Snake" Login="admin" Password="admin" Phone="1900" PassportSeries="1337" PassportId="123321" IsAdmin="1" />
 </Users>
