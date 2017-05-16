@@ -22,10 +22,11 @@ namespace Library
         public Registration()
         {
             InitializeComponent();
-
-            var instance = new ViewModels.RegistrationVm();
-
-            DataContext = instance;
+            var registration = new ViewModels.RegistrationVm();
+            registration.Logged += Close;
+            DataContext = registration;
         }
+
+       
     }
 }

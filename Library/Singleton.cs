@@ -11,7 +11,7 @@ namespace Library
     class Singleton
     {
 
-        // fix it 
+        //TODO: fix it 
 
         public static Window wnd;
 

@@ -2,18 +2,14 @@ C:\Users\ivang\Desktop\Library\Library\bin\Debug\Library.exe.config
 C:\Users\ivang\Desktop\Library\Library\bin\Debug\Library.exe
 C:\Users\ivang\Desktop\Library\Library\bin\Debug\Library.pdb
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.csprojResolveAssemblyReference.cache
-C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\App.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library_MarkupCompile.cache
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library_MarkupCompile.lref
-C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.baml
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.g.resources
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.Properties.Resources.resources
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.csproj.GenerateResource.Cache
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.exe
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.pdb
-C:\Users\ivang\Desktop\Library\Library\obj\Debug\Login.g.cs
-C:\Users\ivang\Desktop\Library\Library\obj\Debug\Login.baml
 C:\Users\ivang\Desktop\Library\Library\bin\Debug\MySql.Data.dll
 c:\Users\student-iiikt\Desktop\Library-master\Library\bin\Debug\Library.exe.config
 c:\Users\student-iiikt\Desktop\Library-master\Library\obj\Debug\Library.exe
@@ -54,4 +50,8 @@ D:\Users\student-iiikt\Downloads\Library-master\Library\obj\Debug\Library.g.reso
 D:\Users\student-iiikt\Downloads\Library-master\Library\obj\Debug\Library.Properties.Resources.resources
 D:\Users\student-iiikt\Downloads\Library-master\Library\obj\Debug\Library.csproj.GenerateResource.Cache
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Registration.baml
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\Login.g.cs
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Registration.g.cs
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\Login.baml
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.baml

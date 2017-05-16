@@ -8,7 +8,7 @@ namespace Library
 {
     // Supported types: XML, SQL;
 
-    interface IDataLoader
+    interface IDataManager
     {
         void AddNewUser(string fn, string ln, string log, string pass, int? ph, int? pid, int? ps);
         void CreateNew();

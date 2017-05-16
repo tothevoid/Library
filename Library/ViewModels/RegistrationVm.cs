@@ -18,6 +18,10 @@ namespace Library.ViewModels
         private int? _passportId;
         private int? _passportSeries;
 
+        public delegate void Registraited();
+
+        public event Registraited Logged;
+
 
         public string FirstName { get {return _firstName ;} set { if (value!=_firstName) Set(ref _firstName,value) ;} }
         public string LastName { get { return _lastName; } set { if (value != _lastName) Set(ref _lastName, value); } }
@@ -31,10 +35,13 @@ namespace Library.ViewModels
         public ICommand OkPress { get {return new Command(OK);} }
 
 
+        //TODO: empty fields
+
         private void OK(object param)
         {
-            var xml = new XMLManager();
+            var xml = new DataConnections.XML();
             xml.AddNewUser(FirstName, LastName, Login, Password, Phone, PassportSeries, PassportId);
+            Logged.Invoke();
         }
     }
 }

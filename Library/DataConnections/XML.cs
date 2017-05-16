@@ -7,9 +7,9 @@ using System.Windows;
 using System.Xml.Linq;
 using System.IO;
 
-namespace Library
+namespace Library.DataConnections
 {
-    class XMLManager
+    class XML
     {
 
         public void AddNewUser(string fn,string ln,string log, string pass,int? ph, int? pid, int? ps)
@@ -30,8 +30,6 @@ namespace Library
 
             elm.Add(user);
             doc.Save("Users.xml");
-
-            MessageBox.Show("Succed");
         }
 
         // add new book
