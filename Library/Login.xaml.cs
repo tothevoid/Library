@@ -22,11 +22,14 @@ namespace Library
     /// </summary>
     public partial class Login : Window
     {
+       
+
         public Login()
         {
             InitializeComponent();
             log.Focus();
-            var instance = new ViewModels.LoginVm();
+            var act = new Action(Close);
+            var instance = new ViewModels.LoginVm(act);
             DataContext = instance;
                
         }

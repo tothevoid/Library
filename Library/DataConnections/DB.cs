@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Data.Sql;
 
 namespace Library.DataConnections
 {
-    class DB:IDataManager
+    public class DB:IDataManager
     {
-        void IDataManager.AddNewUser(string fn, string ln, string log, string pass, int? ph, int? pid, int? ps)
+        public void AddNewUser(string fn, string ln, string log, string pass, int? ph, int? pid, int? ps)
         {
             
         }
 
-        void Connect()
+        public void Connect()
         {
+            
             string connStr = "server=localhost;user=librarygovan;database=id1564197;password=rael1122;";
             MySqlConnection conn = new MySqlConnection(connStr);
             using (conn)
@@ -27,9 +29,20 @@ namespace Library.DataConnections
             }
         }
 
-        void IDataManager.CreateNew()
+        public void CreateNew()
         {
             // new table create
+        }
+
+        public void CreateBook()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Models.Book> GetBooks()
+        {
+            
+            throw new NotImplementedException();
         }
     }
 }

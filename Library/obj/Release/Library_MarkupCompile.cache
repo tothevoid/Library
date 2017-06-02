@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\ivang\Desktop\Library\Library\obj\Debug\
+C:\Users\ivang\Desktop\Library\Library\obj\Release\
 Library
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\ivang\Desktop\Library\Library\App.xaml
 3384554857
 
-191851785252
+18-494407766
 14956614994
 Login.xaml;MainWindow.xaml;Registration.xaml;
 
-False
+True
 

@@ -12,5 +12,7 @@ namespace Library
     {
         void AddNewUser(string fn, string ln, string log, string pass, int? ph, int? pid, int? ps);
         void CreateNew();
+        void CreateBook();
+        List<Models.Book> GetBooks();
     }
 }

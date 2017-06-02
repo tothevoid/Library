@@ -14,43 +14,55 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using Library.Models;
+using System.Globalization;
 
 namespace Library
 {
     public partial class MainWindow : Window
     {
-      
-
         public MainWindow()
         {
             var log = new Login();
-            Singleton.wnd = log;
-            Singleton.wnd.Closed += Wnd_Closed;
+            log.Closed += Wnd_Closed;
             log.ShowDialog();
-
             InitializeComponent();
-
-            List<User> users = new List<User>();
-            var doc = XDocument.Load("Users.xml");
-            foreach (var x in doc.Element("Users").Elements())
-            {
-                users.Add(new User(x.Attribute("FirstName").Value, x.Attribute("LastName").Value, x.Attribute("Login").Value, x.Attribute("Password").Value, Convert.ToInt32(x.Attribute("Phone").Value), Convert.ToInt32(x.Attribute("PassportSeries").Value), Convert.ToInt32(x.Attribute("PassportId").Value)));
-            }
-            Table.ItemsSource = users;
-
-            if (Singleton.CurrentUserType == Library.UserType.Admin)
-                Color.Fill = new SolidColorBrush(Colors.Red);
-            UserType.Text = Singleton.Name;
-
+            var menu = new MenuVm();
+            DataContext = menu;
           
 
         }
 
         private void Wnd_Closed(object sender, EventArgs e)
         {
-            if (Singleton.CurrentUserType == Library.UserType.NonLoged)
+            if (Singleton.CurrentUserType == Enums.UserType.NonLogged)
                 App.Current.Shutdown();
         }
+      
+    }
 
+    public class ColorToVisibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var visibility = Visibility.Hidden;
+
+            if (value == null)
+                return visibility;
+           
+            var clr = value as SolidColorBrush ;
+           
+            if (clr.Color == Colors.Red)
+               visibility = Visibility.Visible;
+
+            return visibility;
+
+
+        }
+
+        public object ConvertBack(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            return null;
+        }
     }
 }

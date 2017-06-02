@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="Login" ResizeMode="NoResize" Height="300" Width="300"  WindowStartupLocation="CenterScreen" >
+        Title="Вход" ResizeMode="NoResize" Height="300" Width="300"  WindowStartupLocation="CenterScreen" >
     <Grid >
         <StackPanel>
-            <Label Margin="0,30,0,0"  Content="Login" HorizontalAlignment="Center"/>
+            <Label Margin="0,30,0,0"  Content="Логин" HorizontalAlignment="Center"/>
             <TextBox Name="log" Height="25" Width="150" Text="{Binding Login}" FontSize="15"  />
-            <Label Content="Password" HorizontalAlignment="Center"/>
+            <Label Content="Пароль" HorizontalAlignment="Center"/>
             <PasswordBox Name="Password" Height="25" Width="150" FontSize="15" />
             <TextBlock  HorizontalAlignment="Center" Margin="0,20,0,0">
-                     <Hyperlink Command="{Binding Register}" FontSize="14" FontStyle="Normal">No account?</Hyperlink>
+                     <Hyperlink Command="{Binding Register}" FontSize="14" FontStyle="Normal">Не зарегистрированы?</Hyperlink>
             </TextBlock>
             <Button Height="25" Margin ="0,20,0,0" Width="70" Content="OK" Command="{Binding OkPress}" CommandParameter="{Binding ElementName = Password}" IsDefault="True"/>
           

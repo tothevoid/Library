@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Books>
+  <Book Name="Мёртвые души" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="123" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="124" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="1243" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="1243214" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="124124" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="124124" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+  <Book Name="12412421" ImgLink="1.jpg" Author="Н. В. Гоголь" Genre="Поэма" PublishYear="1994" Publisher="Русская книга" Language="Русский" Available="4" Link="1.jpg" Score="2,44" CountOfMarks="10" />
+</Books>

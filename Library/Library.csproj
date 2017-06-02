@@ -60,7 +60,9 @@
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
     <Compile Include="DataConnections\DB.cs" />
+    <Compile Include="Enums\UserType.cs" />
     <Compile Include="IDataManager.cs" />
+    <Compile Include="Models\Book.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -71,6 +73,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\BaseVm.cs" />
     <Compile Include="ViewModels\LoginVm.cs" />
+    <Compile Include="ViewModels\MenuVm.cs" />
     <Compile Include="ViewModels\RegistrationVm.cs" />
     <Compile Include="DataConnections\XML.cs" />
     <Page Include="Login.xaml">
@@ -120,9 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

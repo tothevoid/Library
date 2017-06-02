@@ -55,3 +55,4 @@ C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Registration.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Login.baml
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.baml
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\GeneratedInternalTypeHelper.g.cs

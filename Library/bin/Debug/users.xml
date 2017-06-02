@@ -4,4 +4,6 @@
   <User FirstName="Solid" LastName="Snake" Login="admin" Password="admin" Phone="1900" PassportSeries="1337" PassportId="123321" IsAdmin="1" />
   <User FirstName="Illusive" LastName="Man" Login="i132" Password="i231" Phone="1900" PassportSeries="131331" PassportId="1331" IsAdmin="0" />
   <User FirstName="1" LastName="11" Login="11" Password="11" Phone="11" PassportSeries="11" PassportId="11" IsAdmin="0" />
+  <User FirstName="1" LastName="1" Login="123" Password="123" Phone="123" PassportSeries="132" PassportId="123123" IsAdmin="0" />
+  <User FirstName="ss" LastName="ss" Login="ss" Password="ss" Phone="123123" PassportSeries="123123" PassportId="123123123" IsAdmin="0" />
 </Users>

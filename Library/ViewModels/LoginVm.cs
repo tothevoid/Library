@@ -12,9 +12,16 @@ namespace Library.ViewModels
 {
     class LoginVm : VmBase
     {
+        public Action CloseWindow;
+
+        public LoginVm(Action method)
+        {
+            CloseWindow = method;
+        }
+
         private string _login;
 
-        public string Login { get { return _login; } set { if (value != _login) Set(ref _login, value); } }
+        public string Login { get { return _login; } set { Set(ref _login, value); } }
 
         public ICommand Register { get { return new Command(CallRegistration); } }
 
@@ -34,16 +41,16 @@ namespace Library.ViewModels
                 if (elm.Attribute("Login").Value == _login && elm.Attribute("Password").Value == pass.Password)
                 {
                     if (Convert.ToInt32(elm.Attribute("IsAdmin").Value) == 0)
-                        Singleton.CurrentUserType = UserType.Reader;
+                        Singleton.CurrentUserType = Enums.UserType.Reader;
                     else
-                        Singleton.CurrentUserType = UserType.Admin;
+                        Singleton.CurrentUserType = Enums.UserType.Admin;
                     Singleton.Name = elm.Attribute("FirstName").Value + " " + elm.Attribute("LastName").Value;
                     break;
                 }
             }
 
-            if (Singleton.CurrentUserType != UserType.NonLoged)
-                Singleton.wnd.Close();
+            if (Singleton.CurrentUserType != Enums.UserType.NonLogged)
+                CloseWindow.Invoke();
             else
                 MessageBox.Show("Try again");
         }

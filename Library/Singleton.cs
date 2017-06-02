@@ -10,11 +10,6 @@ namespace Library
     //Singleton
     class Singleton
     {
-
-        //TODO: fix it 
-
-        public static Window wnd;
-
         private static Singleton instance;
 
         private Singleton()
@@ -29,13 +24,8 @@ namespace Library
 
         public static string Name { get; set; }
 
-        public static UserType CurrentUserType = UserType.NonLoged;
+        public static Enums.UserType CurrentUserType = Enums.UserType.NonLogged;
     }
 
-    public enum UserType
-    {
-        NonLoged,
-        Reader,
-        Admin
-    }
+   
 }
