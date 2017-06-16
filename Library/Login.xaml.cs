@@ -31,7 +31,6 @@ namespace Library
             var act = new Action(Close);
             var instance = new ViewModels.LoginVm(act);
             DataContext = instance;
-               
         }
 
       

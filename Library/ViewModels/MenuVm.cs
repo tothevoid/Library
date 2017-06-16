@@ -6,30 +6,34 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Library.Models;
 using System.Windows.Input;
+using System.Xml.Linq;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Library
 {
     class MenuVm:VmBase
-    {
+    { 
+        public MenuVm()
+        {
+            if (Singleton.CurrentUserType == Enums.UserType.Admin)
+                 Status = new Uri(@"C:\Users\ivang\Desktop\Library\Library\admin.png");
+            //  Color = new SolidColorBrush(Colors.Red);
+            UserName = Singleton.Name;
+
+            var doc = new DataConnections.XML();
+            Books = new ObservableCollection<Book>(doc.GetBooks());
+            backup = doc.GetBooks();
+        }
+
+        Uri _status = new Uri(@"C:\Users\ivang\Desktop\Library\Library\user.png");
+
 
         private Book _selectedBook;
         public Book SelectedBook { get { return _selectedBook; } set { Set(ref _selectedBook, value); } }
         int newMark;
 
-        List<Book> books = new List<Book>();
-
-        public MenuVm()
-        {
-            if (Singleton.CurrentUserType == Enums.UserType.Admin)
-                Color = new SolidColorBrush(Colors.Red);
-            UserName = Singleton.Name;
-
-            var doc = new DataConnections.XML();
-            Books = doc.GetBooks();
-
-        }
-
-        SolidColorBrush _color = new  SolidColorBrush(Colors.Blue);
+        private List<Book> backup = new List<Book>();
         string _userName;
         private double _score;
         private double? _userScore;
@@ -37,11 +41,17 @@ namespace Library
         private int _width;
         private string _searchQuery = "...";
 
-        public SolidColorBrush Color { get { return _color; }  set { Set(ref _color, value); } }
+        public delegate void WindowClosed();
+
+        public event WindowClosed LogOut;
+
+
+
+        public Uri Status { get { return _status; } set { Set(ref _status, value); } }
 
         public string UserName { get { return _userName; } set { Set(ref _userName, value); } }
 
-        public List<Book> Books { get; set; } = new List<Book>();
+        public ObservableCollection<Book> Books { get; set; }
 
         public double? UserScore { get { return _userScore; } set { Set(ref _userScore, value); } }
 
@@ -53,11 +63,26 @@ namespace Library
 
         public ICommand Expand { get { return new Command(ToExpand); } }
 
+        public ICommand SelectBook { get { return new Command(LoadInfo); } }
+
+        public ICommand Log { get { return new Command(TriggerEvent); } }
+
         public string MarksCount { get { return _marksCount; } set { Set(ref _marksCount, value); } }
 
         public string SearchQuery { get { return _searchQuery; } set { Set(ref _searchQuery, value); } }
 
         public int Width { get { return _width; } set { Set(ref _width, value); } }
+
+        private void LoadInfo(object param)
+        {
+
+        }
+
+        private void TriggerEvent(object param)
+        {
+            if (LogOut!=null)
+                LogOut.Invoke();
+        }
 
         private void ToExpand(object param)
         {
@@ -69,17 +94,41 @@ namespace Library
 
         private void Search(object param)
         {
+            var sorted = backup.Where(x => x.Name.ToLower().Contains(SearchQuery.ToLower())).ToList();
+            Books.Clear();
 
-            Books = Books.Where(x => x.Name.Contains(SearchQuery)).ToList();
+            int col = 0;
+            int row = 0;
+
+            foreach (var x in sorted)
+            { 
+                Thickness margin = new Thickness((200 + 33) * col, (400 + 5) * row, 0, 0);
+                x.Margin = margin;
+                if (col == 4)
+                {
+                        row++;
+                        col = 0;
+                }
+                else
+                    col++;
+                
+            }
+
+            foreach (var x in sorted)
+            {
+                Books.Add(x);
+            }
+
+
         }
 
         private void Connect(object param)
         {
             IDataManager connection = new DataConnections.XML();
-            books = connection.GetBooks();
-            SelectedBook = books[0];
-            UserScore = books[0].Score;
-            MarksCount = string.Format("Based on: {0} reviews", books[0].Marks);
+           // books = connection.GetBooks();
+          //  SelectedBook = books[0];
+           // UserScore = books[0].Score;
+           // MarksCount = string.Format("Based on: {0} reviews", books[0].Marks);
         }
 
 

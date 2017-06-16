@@ -20,8 +20,8 @@ namespace Library.Models
         public int Available { get; set; }
         public Uri Link { get; set; }
         public Thickness Margin { get; set; } = new Thickness(0);
-        public double Score { get; set; }
-        public int Marks { get; set; }
+        public string Score { get; set; }
+        public string Marks { get; set; }
 
         public Book(string name, string author, string gengre, string lang, string py, string publisher, string available, string link, string score, string marks, Thickness margin)
         {
@@ -33,12 +33,11 @@ namespace Library.Models
             Publisher = publisher;
             Language = lang;
             Available = Convert.ToInt32(available);
-            Link = new Uri(@"C:\Users\ivang\Desktop\Library\Library\bin\Debug\First.jpg");
-            Score = Convert.ToDouble(score);
-            Marks = Convert.ToInt32(marks);
+            Link = new Uri(string.Format(@"C:\Users\ivang\Desktop\Library\Library\bin\Debug\{0}", link));
+            Score = "Рейтинг: " + score;
+            Marks = "Оценок: " + marks;
+
+
         }
-
-
-
     }
 }

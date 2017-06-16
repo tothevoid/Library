@@ -20,15 +20,25 @@ namespace Library
 {
     public partial class MainWindow : Window
     {
+      
+
         public MainWindow()
         {
             var log = new Login();
             log.Closed += Wnd_Closed;
             log.ShowDialog();
             InitializeComponent();
-            var menu = new MenuVm();
+            MenuVm menu = new MenuVm();
             DataContext = menu;
-          
+            menu.LogOut += Menu_LogOut;
+        }
+
+        private void Menu_LogOut()
+        {
+            var wnd = new MainWindow();
+            Close();
+            wnd.Show();
+           
 
         }
 
@@ -59,10 +69,32 @@ namespace Library
 
         }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class WidthToSign : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var res = (GridLength)value;
+
+            if (res.Value == 300)
+                return ">";
+            else
+                return "<";
+            
+
+
+        }
+
         public object ConvertBack(object value, Type targetType,
             object parameter, CultureInfo culture)
         {
             return null;
         }
     }
+    
 }

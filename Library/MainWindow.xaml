@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="MyHumbleLibrary" Height="720" Width="1280" ResizeMode="NoResize" >
+        Title="АСУБ" Height="720" Width="1280" ResizeMode="NoResize" Icon="MainIcon.png" WindowStartupLocation="CenterScreen" >
     <Window.Resources>
         <local:ColorToVisibility x:Key="ColorsConverter"/>
+        <local:WidthToSign x:Key="WidthConverter"/>
         <ItemsPanelTemplate x:Key="cnv" >
             <Canvas/>
         </ItemsPanelTemplate>
@@ -20,11 +21,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="{Binding Width}" MaxWidth="300" />
+            <ColumnDefinition Width="{Binding Width}" MaxWidth="300" Name="col"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3" IsEnabled="False"/>
-        <Button Grid.Column="1" Grid.Row="1" Height="70" Content="◀" FontSize="30" Background="White" Command="{Binding Expand}"/>
-        <Menu Grid.ColumnSpan="3" Height="30" >
+        <Button Grid.Column="1" Grid.Row="1" Height="70" Content="{Binding Path=Width, ElementName=col,Converter={StaticResource WidthConverter}}" FontSize="30" Background="White" Command="{Binding Expand}"/>
+        <Menu Background="White" Grid.ColumnSpan="3" Height="30" >
             <MenuItem Header="Главная" Height="30">
                 <MenuItem Header="Подключение" Command="{Binding LoadData}"/>
                 <MenuItem Header="Настройки"/>
@@ -34,9 +35,12 @@
                 <MenuItem Header="Добавить книгу"/>
             </MenuItem>
         </Menu>
-        <StackPanel Grid.Column="0"  HorizontalAlignment="Right" Orientation="Horizontal" >
-            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Padding="0,0,5,0" FontSize="12"  />
-            <Ellipse Name="Color" Height="15" Width="15" Fill="{Binding Color}" />
+        <StackPanel Grid.ColumnSpan="3"  HorizontalAlignment="Right" Orientation="Horizontal" >
+            <Image   Source="{Binding Status}" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Padding="0,0,5,0" FontSize="15"/>
+            <Button  Background="White"  BorderThickness="0" Command="{Binding Log}">
+                <Image Source="C:\Users\ivang\Desktop\Library\Library\logout.png"/>
+            </Button>
         </StackPanel>
         <Grid Grid.Row="1" Margin="25">
             <Grid.ColumnDefinitions>

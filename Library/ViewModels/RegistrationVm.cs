@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Library.ViewModels
@@ -38,11 +39,27 @@ namespace Library.ViewModels
 
         private void OK(object param)
         {
-
-
+            if (StringCheck(FirstName,LastName,Login,Password))
+            {
+                MessageBox.Show("Неправильный ввод", "Ошибка регистрации");
+                return;
+            }
             var xml = new DataConnections.XML();
             xml.AddNewUser(FirstName, LastName, Login, Password, Phone, PassportSeries, PassportId);
             Logged.Invoke();
+        }
+
+        private bool StringCheck(params string[] strs)
+        {
+           foreach (var str in strs)
+           {
+               if (string.IsNullOrEmpty(str))
+               {
+                    return false;
+               }
+           }
+
+           return true;
         }
     }
 }

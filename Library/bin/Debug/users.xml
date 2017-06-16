@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Users>
   <User FirstName="Typical" LastName="User" Login="qwerty" Password="1337" Phone="1900" PassportSeries="1337" PassportId="123321" IsAdmin="0" />
-  <User FirstName="Solid" LastName="Snake" Login="admin" Password="admin" Phone="1900" PassportSeries="1337" PassportId="123321" IsAdmin="1" />
+  <User FirstName="Пётр" LastName="Петров" Login="admin" Password="admin" Phone="1900" PassportSeries="1337" PassportId="123321" IsAdmin="1" />
   <User FirstName="Illusive" LastName="Man" Login="i132" Password="i231" Phone="1900" PassportSeries="131331" PassportId="1331" IsAdmin="0" />
   <User FirstName="1" LastName="11" Login="11" Password="11" Phone="11" PassportSeries="11" PassportId="11" IsAdmin="0" />
   <User FirstName="1" LastName="1" Login="123" Password="123" Phone="123" PassportSeries="132" PassportId="123123" IsAdmin="0" />
