@@ -12,11 +12,7 @@
             <TextBox Name="log" Height="25" Width="150" Text="{Binding Login}" FontSize="15"  />
             <Label Content="Пароль" HorizontalAlignment="Center"/>
             <PasswordBox Name="Password" Height="25" Width="150" FontSize="15" />
-            <TextBlock  HorizontalAlignment="Center" Margin="0,20,0,0">
-                     <Hyperlink Command="{Binding Register}" FontSize="14" FontStyle="Normal">Новый пользователь?</Hyperlink>
-            </TextBlock>
-            <Button Height="25" Margin ="0,20,0,0" Width="70" Content="OK" Command="{Binding OkPress}" CommandParameter="{Binding ElementName = Password}" IsDefault="True"/>
-          
+            <Button Height="25" Margin ="0,50,0,0" Width="70" Content="OK" Command="{Binding OkPress}" CommandParameter="{Binding ElementName = Password}" IsDefault="True"/>
         </StackPanel>
     </Grid>
 </Window>

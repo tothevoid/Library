@@ -24,22 +24,53 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="{Binding Width}" MaxWidth="300" Name="col"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="{Binding Width}" MaxWidth="400" Name="col"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3" IsEnabled="False"/>
-        <Button Grid.Column="1" Grid.Row="1" Height="70" Content="{Binding Path=Width, ElementName=col,Converter={StaticResource WidthConverter}}" FontSize="30" Background="White" Command="{Binding Expand}"/>
-        <Menu Background="White" Grid.ColumnSpan="3" Height="30" >
+        <Button Grid.Column="1" Grid.Row="1" Height="50"  Content="{Binding Path=Width, ElementName=col,Converter={StaticResource WidthConverter}}" FontSize="25" Background="White" Command="{Binding Expand}"/>
+        <Menu Background="White" Grid.ColumnSpan="3" Height="30">
             <MenuItem Header="Главная" Height="30">
-                <MenuItem Header="Подключение" Command="{Binding LoadData}"/>
                 <MenuItem Header="Настройки"/>
             </MenuItem>
             <MenuItem Header="Администрирование" Height="30">
                 <MenuItem Header="Добавить книгу"/>
-                <MenuItem Header="Регистрация"/>
-                <MenuItem Header="Журнал"/>
+                <MenuItem Header="Регистрация" Command="{Binding Register}"/>
+                <MenuItem Header="Журнал" Command="{Binding Journal}" />
             </MenuItem>
         </Menu>
+
+        <Grid Grid.Column="2" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding ImgLink}" Margin="20"/>
+            <StackPanel Grid.Column="1" Margin="20">
+                <TextBlock Text="Название:" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding BookName}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Автор: " HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding BookAuthor}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Жанр: " HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding BookGenre}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Издатель: " HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding BookPublisher}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Год издания: " HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding BookPublishYear}" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Margin="10,0,10,10">
+                <TextBlock Margin="0,10,0,10" Text="Описание: "/>
+                <ScrollViewer VerticalScrollBarVisibility="Visible"  Height="260">
+                    <TextBlock Text="{Binding BookDescription}"  TextWrapping="Wrap" />
+                </ScrollViewer>
+            </StackPanel>
+            <Button Grid.ColumnSpan="2" Grid.Row="2" Margin="10" Content="Взять книгу" Command="{Binding TakeBook}"/>
+        </Grid>
         <StackPanel Grid.ColumnSpan="3"  HorizontalAlignment="Right" Orientation="Horizontal" >
             <Image   Source="{Binding Status}" />
             <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Padding="0,0,5,0" FontSize="15"/>
@@ -49,23 +80,29 @@
         </StackPanel>
         <Grid Grid.Row="1" Margin="25">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                <ComboBox FontSize="20" ItemsSource="{Binding SearchTypes}" SelectedIndex="0" Width="200" Name="Selected"/>
+                <ComboBox FontSize="20" ItemsSource="{Binding Signs}" SelectedIndex="{Binding SelectedSign}" Width="40"  Visibility="{Binding Path=SelectedIndex, ElementName=Selected,Converter={StaticResource QueryConverter}}"/>
+                <TextBox FontSize="20" Text="{Binding SearchQuery}" Name="box" Width="900"/>
+            </StackPanel>
+            <Button Grid.Column="2" FontSize="20" Command="{Binding SearchPressed}" CommandParameter="{Binding Path=SelectedIndex, ElementName=Selected}"   Content="Искать"/>
             <ScrollViewer CanContentScroll ="True" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Grid.Row="2" Margin="0,25,0,0">
                 <Grid>
                     <!--TODO: implement auto height by property-->
                     <Viewbox  Height="8000">
                         <Canvas/>
                     </Viewbox>
-                    <ItemsControl ItemsSource="{Binding Books}" ItemsPanel="{StaticResource cnv}" Grid.ColumnSpan="2" Grid.Row="2" >
+                    <ItemsControl ItemsSource="{Binding Books}" ItemsPanel="{StaticResource cnv}" Grid.ColumnSpan="2" Grid.Row="2"  >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button  Margin="{Binding BookID ,Converter={StaticResource MarginConverter}}" Height="400" Width="200" Background="White" BorderThickness="0" Command="{Binding SelectBook}">
+                                <Button Margin="{Binding BookID ,Converter={StaticResource MarginConverter}}" Height="400" Width="200" Background="White" BorderThickness="0" CommandParameter="{Binding BookID}" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.BookSelected}">
                                     <StackPanel>
                                         <Image Source="{Binding ImgLink, Converter={StaticResource PathConverter}}" Height="320" />
                                         <TextBlock Text="{Binding Author}" FontWeight="Bold" HorizontalAlignment="Center"/>
@@ -79,28 +116,6 @@
                     </ItemsControl>
                 </Grid>
             </ScrollViewer>
-            <Expander Margin="0,0,0,390"  IsTabStop="False" Grid.Column="0" Grid.RowSpan="2" Width="200"  Header="Поиск" HorizontalAlignment="Left">
-                <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black">
-                    <Grid Background="White">
-                        <StackPanel >
-                            <ComboBox ItemsSource="{Binding SearchTypes}" Margin="10,20,10,0" Name="Selected"/>
-                            <TextBox Text="{Binding SearchQuery}" Name="box" Height="25" Margin="10,20,10,0" Visibility="{Binding Path=SelectedIndex, ElementName=Selected,Converter={StaticResource QueryConverter}}"/>
-                            <StackPanel Margin="10,20,10,0" Orientation="Horizontal"  Visibility="{Binding Path=Visibility, ElementName=box,Converter={StaticResource InverseBoolean}}">
-                                <ComboBox ItemsSource="{Binding Signs}" SelectedIndex="{Binding SelectedSign}" Width="40" />
-                                <TextBox Text="{Binding SearchQueryNum}" />
-                            </StackPanel>
-                            <Button Content="Очистить" BorderBrush="Black" Background="White" Width="70" Command="{Binding ClearQuery}" Margin="0,20,0,0" />
-                            <Button Margin="0,20,0,0"  Command="{Binding SearchPressed}" CommandParameter="{Binding Path=SelectedIndex, ElementName=Selected}" HorizontalAlignment="Center" Width="60" Content="Искать"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Expander>
         </Grid>
-
-       
-        <Grid Grid.Column="2" Grid.Row="1" Margin="25">
-            
-        </Grid>
-        
     </Grid>
 </Window>

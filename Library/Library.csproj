@@ -64,19 +64,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Book.cs">
+    <Compile Include="Books.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Command.cs" />
     <Compile Include="Converters\BoleanInverse.cs" />
+    <Compile Include="Converters\BoolToString.cs" />
+    <Compile Include="Converters\DateTimeToDate.cs" />
+    <Compile Include="Converters\IdToBookName.cs" />
+    <Compile Include="Converters\IdToLastName.cs" />
     <Compile Include="Converters\IdToMargin.cs" />
     <Compile Include="Converters\PathToImage.cs" />
     <Compile Include="Converters\SelectionToVisibility.cs" />
     <Compile Include="Converters\WidthToSign.cs" />
     <Compile Include="DataBaseConnection.cs" />
     <Compile Include="Enums\UserType.cs" />
-    <Compile Include="Journal.cs">
-      <DependentUpon>LibraryDB.tt</DependentUpon>
+    <Compile Include="Journal.xaml.cs">
+      <DependentUpon>Journal.xaml</DependentUpon>
     </Compile>
     <Compile Include="LibraryDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -93,7 +97,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LibraryDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Journal.cs" />
+    <Compile Include="Records.cs">
+      <DependentUpon>LibraryDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Singleton.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -104,10 +110,15 @@
     <Compile Include="Users.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BaseVm.cs" />
+    <Compile Include="ViewModels\VmBase.cs" />
+    <Compile Include="ViewModels\JournalVm.cs" />
     <Compile Include="ViewModels\LoginVm.cs" />
     <Compile Include="ViewModels\MenuVm.cs" />
     <Compile Include="ViewModels\RegistrationVm.cs" />
+    <Page Include="Journal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +162,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LibraryDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="LibraryDB.edmx.diagram">
       <DependentUpon>LibraryDB.edmx</DependentUpon>
     </None>
@@ -159,9 +171,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\Book.png" />
@@ -176,6 +185,9 @@
     <Resource Include="Icons\logout.png" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="LibraryDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LibraryDB.edmx</DependentUpon>
@@ -186,9 +198,6 @@
       <DependentUpon>LibraryDB.edmx</DependentUpon>
       <LastGenOutput>LibraryDB.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

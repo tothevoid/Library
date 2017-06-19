@@ -27,7 +27,9 @@ namespace Library
         {
             if (Singleton.GetInstance().CurrentUserType == Enums.UserType.NonLogged)
                 App.Current.Shutdown();
-        } 
+        }
+
+      
     }
     
 }

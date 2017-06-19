@@ -25,8 +25,8 @@ namespace Library
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Book> Book { get; set; }
-        public virtual DbSet<Journal> Journal { get; set; }
+        public virtual DbSet<Books> Books { get; set; }
+        public virtual DbSet<Records> Records { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }
 }

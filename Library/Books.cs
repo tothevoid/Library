@@ -12,12 +12,12 @@ namespace Library
     using System;
     using System.Collections.Generic;
     
-    public partial class Book
+    public partial class Books
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Book()
+        public Books()
         {
-            this.Journal = new HashSet<Journal>();
+            this.Records = new HashSet<Records>();
         }
     
         public int BookID { get; set; }
@@ -31,8 +31,9 @@ namespace Library
         public int InStock { get; set; }
         public double Score { get; set; }
         public int Marks { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Journal> Journal { get; set; }
+        public virtual ICollection<Records> Records { get; set; }
     }
 }

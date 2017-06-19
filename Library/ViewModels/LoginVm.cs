@@ -23,8 +23,6 @@ namespace Library.ViewModels
 
         public int? Login { get { return _login; } set { Set(ref _login, value); } }
 
-        public ICommand Register { get { return new Command(CallRegistration); } }
-
         public ICommand OkPress { get { return new Command(Check); } }
 
         private void Check(object param)
@@ -32,7 +30,6 @@ namespace Library.ViewModels
             var e = Singleton.GetInstance().CurrentUserType;
             var pass = param as PasswordBox;
             var conn = new DataBaseConnection();
-            conn.Connect();
             conn.Authentication((int)Login, pass.Password);
 
             if (Singleton.GetInstance().CurrentUserType != Enums.UserType.NonLogged)
@@ -40,15 +37,6 @@ namespace Library.ViewModels
             else
                 MessageBox.Show("Try again");
         }
-
-        private void CallRegistration(object param)
-        {
-            var wnd = new Registration();
-       
-            wnd.ShowDialog();
-
-        }
-
 
     }
 }

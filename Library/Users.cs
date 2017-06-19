@@ -17,7 +17,7 @@ namespace Library
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
-            this.Journal = new HashSet<Journal>();
+            this.Records = new HashSet<Records>();
         }
     
         public int UserID { get; set; }
@@ -28,9 +28,9 @@ namespace Library
         public string Password { get; set; }
         public int PassportSeries { get; set; }
         public int PassportId { get; set; }
-        public bool IsAdmin { get; set; }
+        public bool IsLibrarian { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Journal> Journal { get; set; }
+        public virtual ICollection<Records> Records { get; set; }
     }
 }

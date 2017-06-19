@@ -12,16 +12,17 @@ namespace Library
     using System;
     using System.Collections.Generic;
     
-    public partial class Journal
+    public partial class Records
     {
         public int RecordID { get; set; }
         public int UserID { get; set; }
         public int BookID { get; set; }
         public System.DateTime Date { get; set; }
         public System.DateTime ReturnDate { get; set; }
+        public bool IsAccepted { get; set; }
         public bool IsReturned { get; set; }
     
-        public virtual Book Book { get; set; }
+        public virtual Books Books { get; set; }
         public virtual Users Users { get; set; }
     }
 }

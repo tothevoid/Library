@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="LibraryProjectModelStoreContainer" CdmEntityContainer="LibraryProjectEntities">
-    <EntitySetMapping Name="Book">
-      <EntityTypeMapping TypeName="LibraryProjectModel.Book">
-        <MappingFragment StoreEntitySet="Book">
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="LibraryProjectModel.Books">
+        <MappingFragment StoreEntitySet="Books">
           <ScalarProperty Name="BookID" ColumnName="BookID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ImgLink" ColumnName="ImgLink" />
@@ -15,17 +15,19 @@
           <ScalarProperty Name="InStock" ColumnName="InStock" />
           <ScalarProperty Name="Score" ColumnName="Score" />
           <ScalarProperty Name="Marks" ColumnName="Marks" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Journal">
-      <EntityTypeMapping TypeName="LibraryProjectModel.Journal">
-        <MappingFragment StoreEntitySet="Journal">
+    <EntitySetMapping Name="Records">
+      <EntityTypeMapping TypeName="LibraryProjectModel.Records">
+        <MappingFragment StoreEntitySet="Records">
           <ScalarProperty Name="RecordID" ColumnName="RecordID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="BookID" ColumnName="BookID" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
           <ScalarProperty Name="IsReturned" ColumnName="IsReturned" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -41,7 +43,7 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="PassportSeries" ColumnName="PassportSeries" />
           <ScalarProperty Name="PassportId" ColumnName="PassportId" />
-          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="IsLibrarian" ColumnName="IsLibrarian" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

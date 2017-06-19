@@ -14,7 +14,7 @@ namespace Library.Converters
         
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
-                if ((int)value < 5)
+                if ((int)value >= 5)
                     return Visibility.Visible;
                 return Visibility.Collapsed;
             }
