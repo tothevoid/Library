@@ -3,13 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv="clr-namespace:Library.Converters"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="АСУБ" Height="720" Width="1280" ResizeMode="NoResize" Icon="MainIcon.png" WindowStartupLocation="CenterScreen" >
+        Title="АСУБ" Height="720" Width="1280" ResizeMode="NoResize" Icon="Icons\Book.png" WindowStartupLocation="CenterScreen" >
     <Window.Resources>
-        <local:ColorToVisibility x:Key="ColorsConverter"/>
-        <local:WidthToSign x:Key="WidthConverter"/>
-        <ItemsPanelTemplate x:Key="cnv" >
+        <conv:WidthToSign  x:Key="WidthConverter"/>
+        <conv:IdToMargin x:Key="MarginConverter"/>
+        <conv:PathToImage x:Key="PathConverter"/>
+        <conv:SelectionToVisibility x:Key="QueryConverter"/>
+        <conv:BooleanInverse x:Key="InverseBoolean"/>
+        <ItemsPanelTemplate x:Key="cnv">
             <Canvas/>
         </ItemsPanelTemplate>
     </Window.Resources>
@@ -30,31 +34,28 @@
                 <MenuItem Header="Подключение" Command="{Binding LoadData}"/>
                 <MenuItem Header="Настройки"/>
             </MenuItem>
-            <MenuItem Header="Администрирование" Height="30" Visibility="{Binding Path=Fill, ElementName=Color,Converter={StaticResource ColorsConverter}}">
-                <MenuItem Header="Пользователи"/>
+            <MenuItem Header="Администрирование" Height="30">
                 <MenuItem Header="Добавить книгу"/>
+                <MenuItem Header="Регистрация"/>
+                <MenuItem Header="Журнал"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.ColumnSpan="3"  HorizontalAlignment="Right" Orientation="Horizontal" >
             <Image   Source="{Binding Status}" />
             <TextBlock VerticalAlignment="Center" Text="{Binding UserName}" Padding="0,0,5,0" FontSize="15"/>
             <Button  Background="White"  BorderThickness="0" Command="{Binding Log}">
-                <Image Source="C:\Users\ivang\Desktop\Library\Library\logout.png"/>
+                <Image Source="Icons/Logout.png"/>
             </Button>
         </StackPanel>
         <Grid Grid.Row="1" Margin="25">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="6*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-
-            <TextBox Text="{Binding SearchQuery}"  FontSize="30" />
-            <Button Command="{Binding SearchPressed}" Grid.Column="1" Content="Найти" FontSize="20" BorderThickness="2" BorderBrush="Black" Background="White"/>
-
             <ScrollViewer CanContentScroll ="True" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Grid.Row="2" Margin="0,25,0,0">
                 <Grid>
                     <!--TODO: implement auto height by property-->
@@ -64,9 +65,9 @@
                     <ItemsControl ItemsSource="{Binding Books}" ItemsPanel="{StaticResource cnv}" Grid.ColumnSpan="2" Grid.Row="2" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button  Margin="{Binding Margin}" Height="400" Width="200" Background="White" BorderThickness="0" Command="{Binding SelectBook}">
+                                <Button  Margin="{Binding BookID ,Converter={StaticResource MarginConverter}}" Height="400" Width="200" Background="White" BorderThickness="0" Command="{Binding SelectBook}">
                                     <StackPanel>
-                                        <Image Source="{Binding Link}" Height="320" />
+                                        <Image Source="{Binding ImgLink, Converter={StaticResource PathConverter}}" Height="320" />
                                         <TextBlock Text="{Binding Author}" FontWeight="Bold" HorizontalAlignment="Center"/>
                                         <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
                                         <TextBlock Text="{Binding Score}"  HorizontalAlignment="Center"/>
@@ -78,27 +79,27 @@
                     </ItemsControl>
                 </Grid>
             </ScrollViewer>
+            <Expander Margin="0,0,0,390"  IsTabStop="False" Grid.Column="0" Grid.RowSpan="2" Width="200"  Header="Поиск" HorizontalAlignment="Left">
+                <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black">
+                    <Grid Background="White">
+                        <StackPanel >
+                            <ComboBox ItemsSource="{Binding SearchTypes}" Margin="10,20,10,0" Name="Selected"/>
+                            <TextBox Text="{Binding SearchQuery}" Name="box" Height="25" Margin="10,20,10,0" Visibility="{Binding Path=SelectedIndex, ElementName=Selected,Converter={StaticResource QueryConverter}}"/>
+                            <StackPanel Margin="10,20,10,0" Orientation="Horizontal"  Visibility="{Binding Path=Visibility, ElementName=box,Converter={StaticResource InverseBoolean}}">
+                                <ComboBox ItemsSource="{Binding Signs}" SelectedIndex="{Binding SelectedSign}" Width="40" />
+                                <TextBox Text="{Binding SearchQueryNum}" />
+                            </StackPanel>
+                            <Button Content="Очистить" BorderBrush="Black" Background="White" Width="70" Command="{Binding ClearQuery}" Margin="0,20,0,0" />
+                            <Button Margin="0,20,0,0"  Command="{Binding SearchPressed}" CommandParameter="{Binding Path=SelectedIndex, ElementName=Selected}" HorizontalAlignment="Center" Width="60" Content="Искать"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Expander>
         </Grid>
+
+       
         <Grid Grid.Column="2" Grid.Row="1" Margin="25">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel >
-                <Image Height="220" Width="175" />
-                <TextBlock Text="{Binding UserScore}"  HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding MarksCount}" TextDecorations="Underline" HorizontalAlignment="Center" />
-            </StackPanel>
-            <StackPanel Grid.Column="2">
-                <TextBlock  Text="Author: " HorizontalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.ColumnSpan="2" Grid.Row="1">
-                <TextBlock Text="Description: "/>
-            </StackPanel>
+            
         </Grid>
         
     </Grid>

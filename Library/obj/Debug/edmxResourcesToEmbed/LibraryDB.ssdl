@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibraryProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImgLink" Type="varchar" MaxLength="50" />
+    <Property Name="Author" Type="varchar" MaxLength="50" />
+    <Property Name="Genre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PublishYear" Type="int" Nullable="false" />
+    <Property Name="Publisher" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Language" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="InStock" Type="int" Nullable="false" />
+    <Property Name="Score" Type="float" Nullable="false" />
+    <Property Name="Marks" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Journal">
+    <Key>
+      <PropertyRef Name="RecordID" />
+    </Key>
+    <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="BookID" Type="int" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="ReturnDate" Type="date" Nullable="false" />
+    <Property Name="IsReturned" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Patronymic" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PassportSeries" Type="int" Nullable="false" />
+    <Property Name="PassportId" Type="int" Nullable="false" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Journal_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="Journal">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Journal_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Journal">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LibraryProjectModelStoreContainer">
+    <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Journal_Book" Association="Self.FK_Journal_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Journal" EntitySet="Journal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Journal_Users" Association="Self.FK_Journal_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Journal" EntitySet="Journal" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

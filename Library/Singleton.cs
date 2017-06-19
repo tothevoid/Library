@@ -7,7 +7,6 @@ using System.Windows;
 
 namespace Library
 {
-    //Singleton
     class Singleton
     {
         private static Singleton instance;
@@ -15,16 +14,18 @@ namespace Library
         private Singleton()
         { }
 
-        public static Singleton getInstance()
+        public static Singleton GetInstance()
         {
             if (instance == null)
                 instance = new Singleton();
             return instance;
         }
 
-        public static string Name { get; set; }
+        public string Name { get; set; }
 
-        public static Enums.UserType CurrentUserType = Enums.UserType.NonLogged;
+        public Enums.UserType CurrentUserType = Enums.UserType.NonLogged;
+
+        public int ElmNum { get; set; } = 1;
     }
 
    

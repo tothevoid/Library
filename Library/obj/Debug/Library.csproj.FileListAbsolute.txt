@@ -10,7 +10,6 @@ C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.Properties.Resources.re
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.csproj.GenerateResource.Cache
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.exe
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library.pdb
-C:\Users\ivang\Desktop\Library\Library\bin\Debug\MySql.Data.dll
 c:\Users\student-iiikt\Desktop\Library-master\Library\bin\Debug\Library.exe.config
 c:\Users\student-iiikt\Desktop\Library-master\Library\obj\Debug\Library.exe
 c:\Users\student-iiikt\Desktop\Library-master\Library\obj\Debug\Library.pdb
@@ -56,3 +55,8 @@ C:\Users\ivang\Desktop\Library\Library\obj\Debug\Registration.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Login.baml
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\MainWindow.baml
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\Library_Content.g.cs
+C:\Users\ivang\Desktop\Library\Library\bin\Debug\EntityFramework.dll
+C:\Users\ivang\Desktop\Library\Library\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ivang\Desktop\Library\Library\bin\Debug\EntityFramework.xml
+C:\Users\ivang\Desktop\Library\Library\bin\Debug\EntityFramework.SqlServer.xml

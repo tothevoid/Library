@@ -9,26 +9,27 @@ using System.Windows.Input;
 using System.Xml.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.IO;
 
 namespace Library
 {
     class MenuVm:VmBase
     { 
         public MenuVm()
-        {
-            if (Singleton.CurrentUserType == Enums.UserType.Admin)
-                 Status = new Uri(@"C:\Users\ivang\Desktop\Library\Library\admin.png");
-            //  Color = new SolidColorBrush(Colors.Red);
-            UserName = Singleton.Name;
-
-            var doc = new DataConnections.XML();
-            Books = new ObservableCollection<Book>(doc.GetBooks());
-            backup = doc.GetBooks();
+        { 
+           if (Singleton.GetInstance().CurrentUserType == Enums.UserType.Admin)
+                Status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\Admin.png");
+           UserName = Singleton.GetInstance().Name;
+           foreach (var book in context.Book.ToList())
+           {
+                Books.Add(book);
+           }
+            Singleton.GetInstance().ElmNum = 1;
         }
 
-        Uri _status = new Uri(@"C:\Users\ivang\Desktop\Library\Library\user.png");
+        Uri _status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\User.png");
 
-
+        private LibraryProjectEntities context = new LibraryProjectEntities();
         private Book _selectedBook;
         public Book SelectedBook { get { return _selectedBook; } set { Set(ref _selectedBook, value); } }
         int newMark;
@@ -39,19 +40,26 @@ namespace Library
         private double? _userScore;
         private string _marksCount;
         private int _width;
-        private string _searchQuery = "...";
+        private string _searchQuery;
+        private int _searchQueryNum;
+        private int _selectedSign;
+
 
         public delegate void WindowClosed();
 
         public event WindowClosed LogOut;
 
+        public string[] SearchTypes { get; } = new string[] { "Название", "Автор", "Жанр", "Издатель", "Язык", "Год издания", "Наличие", "Оценка", "Кол-во оценок"};
 
+        public string[] Signs { get; } = new string[] {"<", ">", "="};
+
+        public int SelectedSign { get { return _selectedSign; } set { Set(ref _selectedSign, value); } }
 
         public Uri Status { get { return _status; } set { Set(ref _status, value); } }
 
         public string UserName { get { return _userName; } set { Set(ref _userName, value); } }
 
-        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<Book> Books { get; set; } = new ObservableCollection<Book>();
 
         public double? UserScore { get { return _userScore; } set { Set(ref _userScore, value); } }
 
@@ -67,15 +75,31 @@ namespace Library
 
         public ICommand Log { get { return new Command(TriggerEvent); } }
 
+        public ICommand ClearQuery { get { return new Command(Clear); } }
+
         public string MarksCount { get { return _marksCount; } set { Set(ref _marksCount, value); } }
 
         public string SearchQuery { get { return _searchQuery; } set { Set(ref _searchQuery, value); } }
 
+        public int SearchQueryNum { get { return _searchQueryNum; } set { Set(ref _searchQueryNum, value); } }
+        
+
         public int Width { get { return _width; } set { Set(ref _width, value); } }
+
+        private void Clear(object pararm)
+        {
+            Books.Clear();
+            foreach (var book in context.Book.ToList())
+            {
+                Books.Add(book);
+            }
+            Singleton.GetInstance().ElmNum = 1;
+
+        }
 
         private void LoadInfo(object param)
         {
-
+           
         }
 
         private void TriggerEvent(object param)
@@ -94,41 +118,107 @@ namespace Library
 
         private void Search(object param)
         {
-            var sorted = backup.Where(x => x.Name.ToLower().Contains(SearchQuery.ToLower())).ToList();
+            int type = (int)param;
+
             Books.Clear();
+            List<Book> res = new List<Book>();
 
-            int col = 0;
-            int row = 0;
-
-            foreach (var x in sorted)
-            { 
-                Thickness margin = new Thickness((200 + 33) * col, (400 + 5) * row, 0, 0);
-                x.Margin = margin;
-                if (col == 4)
-                {
-                        row++;
-                        col = 0;
-                }
-                else
-                    col++;
-                
-            }
-
-            foreach (var x in sorted)
+            switch (param)
             {
-                Books.Add(x);
+                case (0):
+                    res = context.Book.Where(x => x.Name.ToLower().Contains(SearchQuery.ToLower())).ToList();
+                    break;
+
+                case (1):
+                    res = context.Book.Where(x => x.Author.ToLower().Contains(SearchQuery.ToLower())).ToList();
+                    break;
+
+                case (2):
+                    res = context.Book.Where(x => x.Genre.ToLower().Contains(SearchQuery.ToLower())).ToList();
+                    break;
+
+                case (3):
+                    res = context.Book.Where(x => x.Publisher.ToLower().Contains(SearchQuery.ToLower())).ToList();
+                    break;
+
+                case (4):
+                    res = context.Book.Where(x => x.Language.ToLower().Contains(SearchQuery.ToLower())).ToList();
+                    break;
+
+                case (5):
+                    res = ((IEnumerable<Book>)context.Book).Where(x => Compare(x.PublishYear)).ToList();
+                    break;
+
+                case (6):
+                    res = ((IEnumerable<Book>)context.Book).Where(x => Compare(x.InStock)).ToList();
+                    break;
+
+                case (7):
+                    res = ((IEnumerable<Book>)context.Book).Where(x => Compare(x.Marks)).ToList();
+                    break;
+
+                case (8):
+                    res = ((IEnumerable<Book>)context.Book).Where(x => CompareDouble(x.Score)).ToList();
+                    break;
+
             }
 
+            foreach (var book in res)
+            {
+                Books.Add(book);
+            }
+            Singleton.GetInstance().ElmNum = 1;
 
+        }
+
+        private bool CompareDouble(double param)
+        {
+            // fix double
+            bool res = false;
+            switch (SelectedSign)
+            {
+                case (0):
+                    if (param < SearchQueryNum)
+                        res = true;
+                    break;
+                case (1):
+                    if (param > SearchQueryNum)
+                        res = true;
+                    break;
+                case (2):
+                    if (param == SearchQueryNum)
+                        res = true;
+                    break;
+
+            }
+            return res;
+        }
+
+        private bool Compare(int book)
+        {
+            bool res = false;
+            switch (SelectedSign)
+            {
+                case (0):
+                    if (book < SearchQueryNum)
+                        res = true;
+                    break;
+                case (1):
+                    if (book > SearchQueryNum)
+                        res = true;
+                    break;
+                case (2):
+                    if (book == SearchQueryNum)
+                        res = true;
+                    break;
+
+            }
+            return res;
         }
 
         private void Connect(object param)
         {
-            IDataManager connection = new DataConnections.XML();
-           // books = connection.GetBooks();
-          //  SelectedBook = books[0];
-           // UserScore = books[0].Score;
-           // MarksCount = string.Format("Based on: {0} reviews", books[0].Marks);
+           
         }
 
 
