@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
 
 namespace Library.Converters
 {
-    public class IdToLastName : IValueConverter
+    public class QuantityToEnable : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int id = (int)value;
-            var context = new LibraryProjectEntities();
-            var user = context.Users.Where(x=>x.UserID==id).First();
-            return string.Format("{0} {1}. {2}.", user.LastName, user.FirstName.ToCharArray().First(), user.Patronymic.ToCharArray().First());
+            string quantity = (string)value;
+            int res = 0;
+            int.TryParse(quantity, out res);
+            if (res == 0)
+            {
+                return false;
+            }
+            return true;
+
         }
 
         public object ConvertBack(object value, Type targetType,

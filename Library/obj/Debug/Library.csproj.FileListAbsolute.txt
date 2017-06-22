@@ -62,3 +62,5 @@ C:\Users\ivang\Desktop\Library\Library\bin\Debug\EntityFramework.xml
 C:\Users\ivang\Desktop\Library\Library\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Journal.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Journal.baml
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\AddBook.g.cs
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\AddBook.baml

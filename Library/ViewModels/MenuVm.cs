@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 
 namespace Library
 {
@@ -11,29 +12,27 @@ namespace Library
     { 
         public MenuVm()
         { 
-           if (Singleton.GetInstance().CurrentUserType == Enums.UserType.Admin)
-                Status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\Admin.png");
-           UserName = Singleton.GetInstance().Name;
-           foreach (var book in context.Books.ToList())
-           {
-                Books.Add(book);
-           }
-            Singleton.GetInstance().ElmNum = 1;
             CanvasChanged += MenuVm_CanvasChanged;
+            BookAddedEvent += MenuVm_BookAddedEvent;
+            if (Singleton.GetInstance().CurrentUserType == Enums.UserType.Admin)
+            {
+                Status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\Admin.png");
+                MenuVisibility = Visibility.Visible;
+            }
+               
+            UserName = Singleton.GetInstance().Name;
+            foreach (var book in context.Books.ToList())
+            {
+                Books.Add(book);
+            }
+            Singleton.GetInstance().ElmNum = 1;
+            CanvasChanged.Invoke();
         }
 
-        private void MenuVm_CanvasChanged()
-        {
-            // TODO
-        }
+        #region Fields
 
         Uri _status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\User.png");
-
         private LibraryProjectEntities context = new LibraryProjectEntities();
-        private Books _selectedBook;
-        public Books SelectedBook { get { return _selectedBook; } set { Set(ref _selectedBook, value); } }
-
-        private List<Books> backup = new List<Books>();
         string _userName;
         private double _score;
         private double? _userScore;
@@ -41,23 +40,54 @@ namespace Library
         private int _width;
         private string _searchQuery;
         private int _selectedSign;
-
         private Uri _imgLink;
         private string _bookName;
         private string _bookGenre;
         private string _bookAuthor;
         private string _bookPublishYear;
         private string _bookPublisher;
+        private string _bookLanguage;
         private string _bookDescription;
+        private int _booksInStock;
+        private int _viewBoxHeight = 820;
+        private Visibility _menuVisibility = Visibility.Collapsed;
+        private bool _isEnable;
+        private int _currentBookId;
+        
+        #endregion
 
-        //TODO: siwtch user
-
+        #region Events 
         public event Action CanvasChanged;
+            public delegate void WindowClosed();
+            public event WindowClosed LogOut;
+        #endregion
 
-        public delegate void WindowClosed();
+        #region Commands
+            public ICommand BookSelected { get { return new Command(Select); } }
+            public ICommand SearchPressed { get { return new Command(Search); } }
+            public ICommand Expand { get { return new Command(ToExpand); } }
+            public ICommand Log { get { return new Command(TriggerEvent); } }
+            public ICommand Journal { get { return new Command(CallJournal); } }
+            public ICommand Register { get { return new Command(CallRegistration); } }
+            public ICommand AddBook { get { return new Command(CallAddBook); } }
+            public ICommand TakeBook { get { return new Command(BookTaken); } }
+            public ICommand ClearQuery { get { return new Command(Clear); } }
+        #endregion
 
-        public event WindowClosed LogOut;
+        #region Properties
 
+
+
+        public Visibility MenuVisibility { get { return _menuVisibility; } set { Set(ref _menuVisibility, value); } }
+
+        public bool IsEnable { get { return _isEnable; } set { Set(ref _isEnable, value); } }
+
+        public string BookLanguage { get { return _bookLanguage; } set { Set(ref _bookLanguage, value); } }
+        
+        public int ViewBoxHeight { get { return _viewBoxHeight; } set { Set(ref _viewBoxHeight, value); } }
+
+        public int BooksInStock { get { return _booksInStock; } set { Set(ref _booksInStock, value); } }
+        
         public string[] SearchTypes { get; } = new string[] { "Название", "Автор", "Жанр", "Издатель", "Язык", "Год издания", "Наличие", "Оценка", "Кол-во оценок"};
 
         public string[] Signs { get; } = new string[] {"<", ">", "="};
@@ -73,20 +103,6 @@ namespace Library
         public double? UserScore { get { return _userScore; } set { Set(ref _userScore, value); } }
 
         public double Score { get { return _score; } set { Set(ref _score, value); } }
-
-        public ICommand BookSelected { get { return new Command(Select); } }
-
-        public ICommand SearchPressed { get { return new Command(Search); } }
-
-        public ICommand Expand { get { return new Command(ToExpand); } }
-
-        public ICommand Log { get { return new Command(TriggerEvent); } }
-
-        public ICommand ClearQuery { get { return new Command(Clear); } }
-
-        public ICommand Journal { get { return new Command(CallJournal); } }
-
-        public ICommand Register { get { return new Command(CallRegistration); } }
 
         public string MarksCount { get { return _marksCount; } set { Set(ref _marksCount, value); } }
 
@@ -107,8 +123,40 @@ namespace Library
         public string BookPublisher { get { return _bookPublisher; } set { Set(ref _bookPublisher, value); } }
 
         public string BookDescription { get { return _bookDescription; } set { Set(ref _bookDescription, value); } }
+        #endregion
 
+        #region Methods
 
+        private void BookTaken(object param)
+        {
+            DateTime date = DateTime.Today;
+            context.Records.Add(new Records { BookID = _currentBookId, Date=date, ReturnDate = date.AddMonths(1), UserID  = Singleton.GetInstance().UserId });
+            context.SaveChanges();
+        }
+
+        public void MenuVm_BookAddedEvent(int id)
+        {
+            Singleton.GetInstance().ElmNum = Books.Count + 1;
+            Books.Add(context.Books.Where(x => x.BookID == id).First());
+            if ((Books.Count - 1) % 5 == 0)
+                CanvasChanged.Invoke();
+        }
+
+        private void MenuVm_CanvasChanged()
+        {
+            int row = Books.Count / 5;
+            if (Books.Count % 5 != 0)
+                row++;
+            if (row > 2)
+                ViewBoxHeight = row * 410;
+        }
+
+        private void CallAddBook(object param)
+        {
+            var wnd = new AddBook();
+            wnd.Show();
+        }
+            
         private void CallJournal(object param)
         {
             var wnd = new Journal();
@@ -118,7 +166,9 @@ namespace Library
         private void Select(object param)
         {
             int id = (int)param;
+            _currentBookId = id;
 
+            
             Books obj = context.Books.Where(x => x.BookID==id).First();
 
             ImgLink = new Uri(Directory.GetCurrentDirectory() + @"\\Covers\\" + obj.ImgLink);
@@ -128,24 +178,29 @@ namespace Library
             BookGenre = obj.Genre;
             BookAuthor = obj.Author;
             BookDescription = obj.Description;
+            BookLanguage = obj.Language;
+            BooksInStock = obj.InStock;
+            if (Width==0)
+                ToExpand(null);
         }
 
         private void CallRegistration(object param)
         {
             var wnd = new Registration();
-
             wnd.Show();
-
         }
 
-        private void Clear(object pararm)
+        private void Clear(object param)
         {
+            SearchQuery = null;
             Books.Clear();
+            Singleton.GetInstance().ElmNum = 1;
             foreach (var book in context.Books.ToList())
             {
                 Books.Add(book);
             }
-            Singleton.GetInstance().ElmNum = 1;
+            CanvasChanged.Invoke();
+            
         }
 
         private void TriggerEvent(object param)
@@ -164,6 +219,19 @@ namespace Library
 
         private void Search(object param)
         {
+            if (string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                Books.Clear();
+                Singleton.GetInstance().ElmNum = 1;
+                foreach (var book in context.Books.ToList())
+                {
+                    Books.Add(book);
+                }
+               
+                CanvasChanged.Invoke();
+                return;
+            }
+
             int type = (int)param;
 
             Books.Clear();
@@ -208,18 +276,17 @@ namespace Library
                     break;
 
             }
-
+            Singleton.GetInstance().ElmNum = 1;
             foreach (var book in res)
             {
                 Books.Add(book);
             }
-            Singleton.GetInstance().ElmNum = 1;
-
+            CanvasChanged.Invoke();
+           
         }
 
         private bool CompareDouble(double param)
-        {
-           
+        {  
             bool res = false;
             double num = 0;
 
@@ -270,9 +337,6 @@ namespace Library
             }
             return res;
         }
-
-       
-
-
+        #endregion
     }
 }

@@ -6,24 +6,44 @@
         xmlns:local="clr-namespace:Library"
         xmlns:conv="clr-namespace:Library.Converters"
         mc:Ignorable="d"
-        Title="Journal" Height="400" Width="700" WindowStartupLocation="CenterScreen">
+        Title="Журнал" Height="450" Width="700" WindowStartupLocation="CenterScreen" Icon="Icons\Journal.png">
     <Window.Resources>
         <conv:IdToBookName  x:Key="BookConverter"/>
         <conv:IdToLastName x:Key="ReaderConverter"/>
         <conv:DateTimeToDate  x:Key="DateConverter"/>
         <conv:BoolToString  x:Key="BoolConverter"/>
+        <conv:BoolToVis  x:Key="VisibilityConverter"/>
+        <conv:BoolToEnable  x:Key="EnableConverter"/>
     </Window.Resources>
     <Grid>
-        
-        <DataGrid ItemsSource="{Binding Records}" AutoGenerateColumns="False" IsReadOnly="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding Records}" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" Grid.Row="1" Name="Table">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Читатель" Binding="{Binding UserID,Converter={StaticResource ReaderConverter}}" Width="2*"/>
                 <DataGridTextColumn Header="Книга" Binding="{Binding BookID,Converter={StaticResource BookConverter}}" Width="2*"/>
-                <DataGridTextColumn Header="Дата выдачи" Binding="{Binding Date, Converter={StaticResource DateConverter}}" Width="2*"/>
-                <DataGridTextColumn Header="Дата возврата" Binding="{Binding ReturnDate, Converter={StaticResource DateConverter}}" Width="2*"/>
-                <DataGridTextColumn Header="Взята?" Binding="{Binding IsAccepted, Converter={StaticResource BoolConverter}}" Width="1*"/>
-                <DataGridTextColumn Header="Возвращена?" Binding="{Binding IsReturned, Converter={StaticResource BoolConverter}}" Width="1.4*"/>
+                <DataGridTextColumn Header="Дата выдачи" Binding="{Binding Date, Converter={StaticResource DateConverter}}" Width="90"/>
+                <DataGridTextColumn Header="Дата возврата" Binding="{Binding ReturnDate, Converter={StaticResource DateConverter}}" Width="90"/>
+                <DataGridTextColumn Header="Взята?" Binding="{Binding IsAccepted, Converter={StaticResource BoolConverter}}" Width="50"/>
+                <DataGridTextColumn Header="Возвращена?" Binding="{Binding IsReturned, Converter={StaticResource BoolConverter}}" Width="90"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Height="20" Name="btn" Grid.Column="1" Grid.Row="3" Width="100" Content="Читатель взял" IsEnabled="{Binding Path=SelectedItem.RecordID, ElementName=Table,Converter={StaticResource VisibilityConverter}}" Command="{Binding Taken}" CommandParameter="{Binding Path=SelectedItem.RecordID, ElementName=Table}" HorizontalAlignment="Left"/>
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical">
+            <TextBlock Text="Оценка: " HorizontalAlignment="Right" Width="100" TextAlignment="Center"/> 
+            <ComboBox ItemsSource="{Binding Marks}" HorizontalAlignment="Right" Width="100" Margin="0,0,0,15" SelectedIndex="{Binding SelectedMark}"/>
+            <Button  Width="100" Content="Читатель вернул" IsEnabled="{Binding Path=SelectedItem.RecordID, ElementName=Table,Converter={StaticResource EnableConverter}}" Command="{Binding Returned}" CommandParameter="{Binding Path=SelectedItem.RecordID, ElementName=Table}" HorizontalAlignment="Right"/>
+        </StackPanel>
+       
     </Grid>
 </Window>

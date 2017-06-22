@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
+using System.Linq;
 
 namespace Library.Converters
 {
-    public class IdToLastName : IValueConverter
+    public class BoolToEnable : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             int id = (int)value;
+
+            if (id == 0)
+                return false;
             var context = new LibraryProjectEntities();
-            var user = context.Users.Where(x=>x.UserID==id).First();
-            return string.Format("{0} {1}. {2}.", user.LastName, user.FirstName.ToCharArray().First(), user.Patronymic.ToCharArray().First());
+
+            var res = context.Records.Where(x => x.RecordID == id).FirstOrDefault();
+            if (!res.IsReturned && res.IsAccepted)
+                return true;
+            return false;
+
         }
 
         public object ConvertBack(object value, Type targetType,
@@ -22,4 +29,5 @@ namespace Library.Converters
         }
     }
 }
+
 

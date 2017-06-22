@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Library.Converters
 {
-    public class IdToLastName : IValueConverter
+    public class TextToVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int id = (int)value;
-            var context = new LibraryProjectEntities();
-            var user = context.Users.Where(x=>x.UserID==id).First();
-            return string.Format("{0} {1}. {2}.", user.LastName, user.FirstName.ToCharArray().First(), user.Patronymic.ToCharArray().First());
+            string text = (string)value;
+            if (string.IsNullOrWhiteSpace(text))
+                return Visibility.Collapsed;
+            else
+                return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType,
@@ -22,4 +23,3 @@ namespace Library.Converters
         }
     }
 }
-

@@ -14,7 +14,5 @@ namespace Library
             var instance = new ViewModels.LoginVm(act);
             DataContext = instance;
         }
-
-      
     }
 }

@@ -23,6 +23,10 @@ namespace Library
 
         public string Name { get; set; }
 
+        public int LastId { get; set; }
+
+        public int UserId { get; set; }
+
         public Enums.UserType CurrentUserType = Enums.UserType.NonLogged;
 
         public int ElmNum { get; set; } = 1;

@@ -7,7 +7,7 @@
       <Diagram DiagramId="81d1bc8b81b04cc8ba22d469acb279c0" Name="Diagram1">
         <EntityTypeShape EntityType="LibraryProjectModel.Books" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryProjectModel.Records" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryProjectModel.Users" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryProjectModel.Users" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="LibraryProjectModel.FK_Records_Books" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryProjectModel.FK_Records_Users" ManuallyRouted="false" />
       </Diagram>

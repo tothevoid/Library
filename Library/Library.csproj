@@ -64,20 +64,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddBook.xaml.cs">
+      <DependentUpon>AddBook.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Books.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Command.cs" />
     <Compile Include="Converters\BoleanInverse.cs" />
+    <Compile Include="Converters\BoolToEnable.cs" />
     <Compile Include="Converters\BoolToString.cs" />
+    <Compile Include="Converters\BoolToVis.cs" />
     <Compile Include="Converters\DateTimeToDate.cs" />
     <Compile Include="Converters\IdToBookName.cs" />
     <Compile Include="Converters\IdToLastName.cs" />
     <Compile Include="Converters\IdToMargin.cs" />
     <Compile Include="Converters\PathToImage.cs" />
+    <Compile Include="Converters\QuanityToEnable.cs" />
     <Compile Include="Converters\SelectionToVisibility.cs" />
+    <Compile Include="Converters\TextToVisibility.cs" />
     <Compile Include="Converters\WidthToSign.cs" />
-    <Compile Include="DataBaseConnection.cs" />
     <Compile Include="Enums\UserType.cs" />
     <Compile Include="Journal.xaml.cs">
       <DependentUpon>Journal.xaml</DependentUpon>
@@ -110,11 +116,16 @@
     <Compile Include="Users.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddBookVm.cs" />
     <Compile Include="ViewModels\VmBase.cs" />
     <Compile Include="ViewModels\JournalVm.cs" />
     <Compile Include="ViewModels\LoginVm.cs" />
     <Compile Include="ViewModels\MenuVm.cs" />
     <Compile Include="ViewModels\RegistrationVm.cs" />
+    <Page Include="AddBook.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Journal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +199,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Icons\Journal.png" />
+    <Resource Include="Icons\AddBook.png" />
     <Content Include="LibraryDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LibraryDB.edmx</DependentUpon>
