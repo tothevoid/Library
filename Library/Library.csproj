@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountRecover.xaml.cs">
+      <DependentUpon>AccountRecover.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddBook.xaml.cs">
       <DependentUpon>AddBook.xaml</DependentUpon>
     </Compile>
@@ -116,12 +119,17 @@
     <Compile Include="Users.cs">
       <DependentUpon>LibraryDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AccountRecoverVm.cs" />
     <Compile Include="ViewModels\AddBookVm.cs" />
     <Compile Include="ViewModels\VmBase.cs" />
     <Compile Include="ViewModels\JournalVm.cs" />
     <Compile Include="ViewModels\LoginVm.cs" />
     <Compile Include="ViewModels\MenuVm.cs" />
     <Compile Include="ViewModels\RegistrationVm.cs" />
+    <Page Include="AccountRecover.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddBook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

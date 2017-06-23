@@ -15,22 +15,13 @@ using System.Windows.Shapes;
 namespace Library
 {
   
-    public partial class AddBook : Window
+    public partial class AccountRecover : Window
     {
-        public AddBook()
+        public AccountRecover()
         {
             InitializeComponent();
-
-            var vm = new ViewModels.AddBookVm();
-            vm.CloseWindow += Vm_CloseWindow;
+            var vm = new ViewModels.AccountRecoverVm();
             DataContext = vm;
-            
-            
-        }
-
-        private void Vm_CloseWindow()
-        {
-            Close();
         }
     }
 }

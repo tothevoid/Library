@@ -9,10 +9,18 @@ namespace Library
     { 
         public delegate void BookAdded(int id);
 
+        public delegate void ScoreUpdated(int id);
+
         public static event BookAdded BookAddedEvent;
-        
+
+        public static event ScoreUpdated ScoreChanged;
+
         public event PropertyChangedEventHandler PropertyChanged;
-      
+
+
+       
+        protected static LibraryProjectEntities context = new LibraryProjectEntities();
+
         protected void Set<T>(ref T field, T value, [CallerMemberName] string propName = null)
         {
             if (field != null && !field.Equals(value) || value != null && !value.Equals(field))
@@ -27,6 +35,12 @@ namespace Library
         {
             if (BookAddedEvent!=null)
                 BookAddedEvent.Invoke(id);
+        }
+
+        protected void OnScoreChanging(int id )
+        {
+            if (BookAddedEvent != null)
+                ScoreChanged.Invoke(id);
         }
     }
 }

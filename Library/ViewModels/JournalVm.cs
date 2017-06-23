@@ -20,7 +20,6 @@ namespace Library.ViewModels
         {
             if (Records.Count != 0)
                 Records.Clear();
-            var context = new LibraryProjectEntities();
             foreach (var record in context.Records.ToList())
             {
                 Records.Add(record);
@@ -29,9 +28,9 @@ namespace Library.ViewModels
 
         public ObservableCollection<Records> Records { get; set; }
 
-        public int[] Marks { get; } = new int[] { 1, 2, 3, 4, 5 };
+        public string[] Marks { get; } = new string[] {"-", "1", "2", "3", "4", "5" };
         
-        private int _selectedMark = 4;
+        private int _selectedMark = 0;
 
         public int SelectedMark { get { return _selectedMark; } set { Set(ref _selectedMark, value); } } 
 
@@ -41,8 +40,9 @@ namespace Library.ViewModels
 
         void SwitchTaken(object param)
         {
+            if (param == null)
+                return;
             int id = (int)param;
-            var context = new LibraryProjectEntities();
             var elm = context.Records.Where(x => x.RecordID == id).FirstOrDefault();
             //context.Books.Where(x => x.BookID == elm.BookID).First().InStock--;
             elm.IsAccepted = true;
@@ -52,15 +52,23 @@ namespace Library.ViewModels
 
         void SwitchReturned(object param)
         {
+            if (param == null)
+                return;
             int id = (int)param;
-            var context = new LibraryProjectEntities();
             var elm = context.Records.Where(x => x.RecordID == id).FirstOrDefault();
 
            // context.Books.Where(x => x.BookID == elm.BookID).First().InStock++;
             var book = context.Books.Where(x => x.BookID == elm.BookID).FirstOrDefault();
-            var score = (book.Score * book.Marks + (SelectedMark+1)) / (book.Marks+1);
-            book.Marks++;
-            book.Score = Math.Round(score,2);
+            if (SelectedMark!=0)
+            {
+                var score = (book.Score * book.Marks + SelectedMark) / (book.Marks + 1);
+                context.Books.Local.Where(x => x.BookID == elm.BookID).FirstOrDefault().Marks++;
+                context.Books.Local.Where(x => x.BookID == elm.BookID).FirstOrDefault().Score = Math.Round(score, 2);
+                //  book.Marks++;
+                //  book.Score = Math.Round(score, 2);
+               
+                OnScoreChanging(book.BookID);
+            }
             elm.IsReturned = true;
             context.SaveChanges();
             Load();

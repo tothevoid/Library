@@ -32,10 +32,7 @@
         <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3" IsEnabled="False"/>
         <Button Grid.Column="1" Grid.Row="1" Height="50"  Content="{Binding Path=Width, ElementName=col,Converter={StaticResource WidthConverter}}" FontSize="25" Background="White" Command="{Binding Expand}"/>
         <Menu Background="White" Grid.ColumnSpan="3" Height="30">
-            <MenuItem Header="Главная" Height="30">
-                <MenuItem Header="Настройки"/>
-            </MenuItem>
-            <MenuItem Header="Администрирование" Height="30" Visibility="{Binding MenuVisibility}">
+            <MenuItem Header="Управление" Height="30" Visibility="{Binding MenuVisibility}">
                 <MenuItem Header="Добавить книгу" Command="{Binding AddBook}"/>
                 <MenuItem Header="Регистрация" Command="{Binding Register}"/>
                 <MenuItem Header="Журнал" Command="{Binding Journal}" />
@@ -44,7 +41,7 @@
 
         <Grid Grid.Column="2" Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="280"/>
+                <RowDefinition Height="300"/>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
@@ -102,13 +99,12 @@
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                 <ComboBox FontSize="20" ItemsSource="{Binding SearchTypes}" SelectedIndex="0" Width="200" Name="Selected"/>
                 <ComboBox FontSize="20" ItemsSource="{Binding Signs}" SelectedIndex="{Binding SelectedSign}" Width="40"  Visibility="{Binding Path=SelectedIndex, ElementName=Selected,Converter={StaticResource QueryConverter}}"/>
-                <Button Command="{Binding ClearQuery}" Visibility="{Binding ElementName=box, Path=Text, Converter={StaticResource TextClear}}" BorderBrush="LightSlateGray" FontSize="25" Width="20" Content="X"/>
+                <Button Command="{Binding ClearQuery}" Visibility="{Binding ElementName=box, Path=Text, Converter={StaticResource TextClear}}" VerticalContentAlignment="Center" Background="White" FontSize="20"  Content="⯇"/>
                 <TextBox    FontSize="20" Text="{Binding SearchQuery}" Name="box" Width="900"/>
             </StackPanel>
             <Button Grid.Column="2" FontSize="20" Command="{Binding SearchPressed}" CommandParameter="{Binding Path=SelectedIndex, ElementName=Selected}"   Content="Искать"/>
             <ScrollViewer CanContentScroll ="True" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Grid.Row="2" Margin="0,25,0,0">
                 <Grid>
-                    <!--TODO: implement auto height by property-->
                     <Viewbox  Height="{Binding ViewBoxHeight}">
                         <Canvas/>
                     </Viewbox>

@@ -64,3 +64,5 @@ C:\Users\ivang\Desktop\Library\Library\obj\Debug\Journal.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\Journal.baml
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\AddBook.g.cs
 C:\Users\ivang\Desktop\Library\Library\obj\Debug\AddBook.baml
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\AccountRecover.g.cs
+C:\Users\ivang\Desktop\Library\Library\obj\Debug\AccountRecover.baml

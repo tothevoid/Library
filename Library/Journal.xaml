@@ -28,7 +28,9 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <DataGrid ItemsSource="{Binding Records}" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" Grid.Row="1" Name="Table">
+        <DataGrid ItemsSource="{Binding Records}"  AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" Grid.Row="1" Name="Table" EnableRowVirtualization="True" 
+          AlternatingRowBackground="LightGray" 
+          AlternationCount="2" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Читатель" Binding="{Binding UserID,Converter={StaticResource ReaderConverter}}" Width="2*"/>
                 <DataGridTextColumn Header="Книга" Binding="{Binding BookID,Converter={StaticResource BookConverter}}" Width="2*"/>
@@ -40,8 +42,8 @@
         </DataGrid>
         <Button Height="20" Name="btn" Grid.Column="1" Grid.Row="3" Width="100" Content="Читатель взял" IsEnabled="{Binding Path=SelectedItem.RecordID, ElementName=Table,Converter={StaticResource VisibilityConverter}}" Command="{Binding Taken}" CommandParameter="{Binding Path=SelectedItem.RecordID, ElementName=Table}" HorizontalAlignment="Left"/>
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical">
-            <TextBlock Text="Оценка: " HorizontalAlignment="Right" Width="100" TextAlignment="Center"/> 
-            <ComboBox ItemsSource="{Binding Marks}" HorizontalAlignment="Right" Width="100" Margin="0,0,0,15" SelectedIndex="{Binding SelectedMark}"/>
+            <TextBlock Text="Оценка: " HorizontalAlignment="Right" Width="100" TextAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Marks}" IsEnabled="{Binding Path=SelectedItem.RecordID, ElementName=Table,Converter={StaticResource EnableConverter}}" HorizontalAlignment="Right" Width="100" Margin="0,0,0,15" SelectedIndex="{Binding SelectedMark}"/>
             <Button  Width="100" Content="Читатель вернул" IsEnabled="{Binding Path=SelectedItem.RecordID, ElementName=Table,Converter={StaticResource EnableConverter}}" Command="{Binding Returned}" CommandParameter="{Binding Path=SelectedItem.RecordID, ElementName=Table}" HorizontalAlignment="Right"/>
         </StackPanel>
        

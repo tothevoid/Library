@@ -12,7 +12,8 @@ namespace Library.ViewModels
 {
     class AddBookVm:VmBase
     {
-        LibraryProjectEntities context = new LibraryProjectEntities();
+
+        public event Action CloseWindow;
 
         string _name;
         string _author;
@@ -83,12 +84,10 @@ namespace Library.ViewModels
             
             int id = book.BookID;
 
-            var link = Img.AbsolutePath.Split('/').Last().Split('.');
-
-            var dir = Directory.GetCurrentDirectory() + "\\Covers\\" + id + "."+ link[1];
-
             if (Img != null)
             {
+                var link = Img.AbsolutePath.Split('/').Last().Split('.');
+                var dir = Directory.GetCurrentDirectory() + "\\Covers\\" + id + "." + link[1];
                 context.Books.Where(x => x.BookID == id).First().ImgLink = id + "." + link[1];
                 File.Copy(Img.AbsolutePath, dir);
                 context.SaveChanges();
@@ -96,8 +95,8 @@ namespace Library.ViewModels
 
             Singleton.GetInstance().LastId = id;
             OnAdding(id);
-           // Singleton.GetInstance().ElmNum = 1;
-            // close this wnd
+            CloseWindow.Invoke();
+
         }
 
     }

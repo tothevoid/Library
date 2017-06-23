@@ -13,7 +13,10 @@ namespace Library.Converters
 
             var path = Directory.GetCurrentDirectory();
 
-            // no cover implemention
+            if (string.IsNullOrWhiteSpace(file))
+            {
+                return new Uri(path + @"\\Covers\\0.png");
+            }
 
             return new Uri(path + @"\\Covers\\" + file);
 

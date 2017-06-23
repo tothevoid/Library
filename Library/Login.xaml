@@ -12,7 +12,10 @@
             <TextBox Name="log" Height="25" Width="150" Text="{Binding Login}" FontSize="15"  />
             <Label Content="Пароль" HorizontalAlignment="Center"/>
             <PasswordBox Name="Password" Height="25" Width="150" FontSize="15" />
-            <Button Height="25" Margin ="0,50,0,0" Width="70" Content="OK" Command="{Binding OkPress}" CommandParameter="{Binding ElementName = Password}" IsDefault="True"/>
+            <TextBlock  HorizontalAlignment="Center" Margin="0,30,0,0">
+                     <Hyperlink Command="{Binding Recover}" FontSize="14" FontStyle="Normal">Восстановление учётной записи</Hyperlink>
+            </TextBlock>
+            <Button Height="25" Margin ="0,40,0,0" Width="70" Content="OK" Command="{Binding OkPress}" CommandParameter="{Binding ElementName = Password}" IsDefault="True"/>
         </StackPanel>
     </Grid>
 </Window>

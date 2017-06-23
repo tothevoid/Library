@@ -21,6 +21,14 @@ namespace Library.ViewModels
 
         public ICommand OkPress { get { return new Command(Check); } }
 
+        public ICommand Recover { get { return new Command(CallRecover); } }
+
+        private void CallRecover(object param)
+        {
+            var wnd = new AccountRecover();
+            wnd.ShowDialog();
+        }
+
         private void Check(object param)
         {
             var e = Singleton.GetInstance().CurrentUserType;
@@ -32,7 +40,11 @@ namespace Library.ViewModels
                 return; 
             }
 
-            Authentication((int)Login, pass.Password);
+            if (!Authentication((int)Login, pass.Password))
+            {
+                MessageBox.Show("Неправильный ввод", "Ошбика входа");
+                return;
+            }
 
             if (Singleton.GetInstance().CurrentUserType != Enums.UserType.NonLogged)
                 CloseWindow.Invoke();
@@ -44,7 +56,6 @@ namespace Library.ViewModels
         {
             bool res = false;
 
-            LibraryProjectEntities context = new LibraryProjectEntities();
 
             var search = context.Users.Where(x => x.UserID == id && x.Password == pass).FirstOrDefault();
 

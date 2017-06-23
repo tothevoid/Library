@@ -14,6 +14,7 @@ namespace Library
         { 
             CanvasChanged += MenuVm_CanvasChanged;
             BookAddedEvent += MenuVm_BookAddedEvent;
+            ScoreChanged += MenuVm_ScoreChanged;
             if (Singleton.GetInstance().CurrentUserType == Enums.UserType.Admin)
             {
                 Status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\Admin.png");
@@ -29,10 +30,26 @@ namespace Library
             CanvasChanged.Invoke();
         }
 
+        private void MenuVm_ScoreChanged(int id)
+        {
+           int i = 0;
+           foreach (var book in Books)
+           {
+                if (book.BookID == id)
+                    break;
+                else
+                    i++;
+           }
+            
+            Singleton.GetInstance().ElmNum = i+1;
+            var inst = context.Books.Where(x => x.BookID == id).Single();
+            Books.RemoveAt(i);
+            Books.Insert(i, inst);
+        }
+
         #region Fields
 
         Uri _status = new Uri(Directory.GetCurrentDirectory() + @"\\Icons\\User.png");
-        private LibraryProjectEntities context = new LibraryProjectEntities();
         string _userName;
         private double _score;
         private double? _userScore;
@@ -131,7 +148,9 @@ namespace Library
         {
             DateTime date = DateTime.Today;
             context.Records.Add(new Records { BookID = _currentBookId, Date=date, ReturnDate = date.AddMonths(1), UserID  = Singleton.GetInstance().UserId });
+            BooksInStock--;
             context.SaveChanges();
+            MessageBox.Show("Для получения подойдите к библиотекарю","Книга добавлена");
         }
 
         public void MenuVm_BookAddedEvent(int id)
@@ -171,7 +190,12 @@ namespace Library
             
             Books obj = context.Books.Where(x => x.BookID==id).First();
 
-            ImgLink = new Uri(Directory.GetCurrentDirectory() + @"\\Covers\\" + obj.ImgLink);
+            if (string.IsNullOrWhiteSpace(obj.ImgLink))
+            {
+                ImgLink = new Uri(Directory.GetCurrentDirectory() + @"\\Covers\\0.png");   
+            }
+            else
+                ImgLink = new Uri(Directory.GetCurrentDirectory() + @"\\Covers\\" + obj.ImgLink);
             BookName = obj.Name;
             BookPublisher = obj.Publisher;
             BookPublishYear = obj.PublishYear.ToString();
@@ -290,7 +314,7 @@ namespace Library
             bool res = false;
             double num = 0;
 
-            if (!double.TryParse(SearchQuery, out num))
+            if (!double.TryParse(SearchQuery.Replace('.',','), out num))
                 return res;
 
             switch (SelectedSign)

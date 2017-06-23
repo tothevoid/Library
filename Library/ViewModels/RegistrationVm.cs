@@ -35,7 +35,6 @@ namespace Library.ViewModels
                 return;
             }
 
-            var context = new LibraryProjectEntities();
             var res = context.Users.Add(new Users { FirstName = _firstName, LastName = _lastName, Patronymic = _patronymic, PassportId = (int)_passportId, PassportSeries = (int)_passportSeries, Password = _password, Phone =  _phone });
             context.SaveChanges();
             MessageBox.Show("Уникальный номер пользователя: "+ res.UserID, "Регистрация завершена" );
